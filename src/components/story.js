@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storyLoad } from "../redux/actions";
 import Comment from "./comment";
+import { List } from "antd";
+import 'antd/dist/antd.css';
+
 
 
 function Story(props) {
@@ -28,9 +31,20 @@ function Story(props) {
             <p>{storyData.date}</p>
             <p>{storyData.nick}</p>
             <p>{storyData.commentsId}</p>
-            {comments.map(res => {
-                return <Comment key={res.id} data={res} />
-            })}
+            <List 
+                className="comment-list"
+                header={`${comments.length} comments`} 
+                itemLayout="horizontal"
+                dataSource={comments}
+                renderItem={res => (
+                    <li>
+                        <Comment key={res.id} data={res} />
+                    </li>
+                )}
+            />
+            {/* {comments.map(res => {
+                return  <Comment key={res.id} data={res} />
+            })} */}
         </div>
         
     )
