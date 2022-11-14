@@ -2,6 +2,7 @@ import SingleNews from "./singleNews";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { newsLoad } from "../redux/actions";
+import { Link } from "react-router-dom";
 
 function News(props) {
 
@@ -18,9 +19,11 @@ function News(props) {
 
     return (
         <div className="news">
-            {news.length && news.map(res => {
-                return <SingleNews key={res.id} data={res} />
-            })}
+            {news.map(res => (
+                <Link key={res.id} to={`/stories/${res.id}`} >
+                    <SingleNews  data={res} />
+                </Link>
+            ))}
         </div>
     )
 }
