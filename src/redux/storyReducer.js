@@ -1,8 +1,9 @@
-import { STORY_LOAD } from "./types";
+import { STORY_LOAD, UPDATE_NUMBERS_OF_COMMENTS } from "./types";
 
 
 const initialState = {
-    story: {}
+    story: {}, 
+    numberOfComments: 0
 }
 
 export const storyReducer = (state = initialState, action) => {
@@ -10,23 +11,17 @@ export const storyReducer = (state = initialState, action) => {
 
     switch (action.type){
         case STORY_LOAD:
-            return(() => {
-
-                const tempStory = {
-                    title: action.data.title, 
-                    rating: action.data.score, 
-                    nick: action.data.by, 
-                    date: action.data.time, 
-                    id: action.data.id, 
-                    url: action.data.url, 
-                    commentsId: action.data.kids
-                }
-
                 return {
                     ...state, 
-                    story: tempStory
+                    story: action.data, 
+                    numberOfComments: action.data.descendants
                 }
-            })();
+        
+        case UPDATE_NUMBERS_OF_COMMENTS:
+                return {
+                    ...state, 
+                    numberOfComments: action.descendants
+                }
             
         default:
             return state;

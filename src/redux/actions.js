@@ -1,4 +1,4 @@
-import { COMMENTS_LOAD, NEWS_LOAD, STORY_LOAD } from "./types";
+import { COMMENTS_LOAD, NEWS_LOAD, STORY_LOAD, UPDATE_NUMBERS_OF_COMMENTS } from "./types";
 
 
 export function newsLoad() {
@@ -7,7 +7,7 @@ export function newsLoad() {
         const storiesId = await response.json(); 
         const data = []; 
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 100; i++) {
             data.push(
                 fetch(`https://hacker-news.firebaseio.com/v0/item/${storiesId[i]}.json?print=pretty`)
                     .then(response => response.json()));
@@ -34,22 +34,22 @@ export function storyLoad(id) {
             data: jsonData
         })
 
-        dispatch(commentsLoad(jsonData.kids));
+        if (jsonData.kids !== undefined) {
+            dispatch(commentsLoad(jsonData.kids));
+        }
+        else {
+            dispatch({
+                type: COMMENTS_LOAD, 
+                data: []
+            });
+        }
+
 
     }
 }
 
 export function commentsLoad(idArr) {
     return async dispatch => {
-
-        if (idArr === undefined) {
-            dispatch({
-                type: COMMENTS_LOAD, 
-                data: []
-            });
-
-            return;
-        }
 
         const data = [];
 
@@ -67,5 +67,17 @@ export function commentsLoad(idArr) {
             })
         })
 
+    }
+}
+
+
+export function updateNumbersOfComments(id) {
+    return async dispatch => {
+        const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
+                            .then(response => response.json());
+        dispatch({
+            type: UPDATE_NUMBERS_OF_COMMENTS, 
+            descendants: response.descendants
+        })
     }
 }

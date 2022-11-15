@@ -9,24 +9,12 @@ export const commentsReducer = (state = initialState, action) => {
 
     switch (action.type){
         case COMMENTS_LOAD:
-            return(() => {
-
-                const tempComments = action.data.map(res => {
-                    return {
-                        nick: res.by, 
-                        date: res.time, 
-                        id: res.id, 
-                        text: res.text, 
-                        kids: res.kids
-                    }
-                }) 
-
-                return {
-                    ...state, 
-                    comments: tempComments 
-                }
-            })();
             
+            return {
+                ...state, 
+                comments: action.data
+            }
+
         default:
             return state;
     }

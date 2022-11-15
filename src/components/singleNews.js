@@ -4,7 +4,7 @@ import React from 'react';
 
 function SingleNews({data}) {
 
-    const {title, rating, nick, date, id} = data; 
+    const {title, score, by, time, id} = data; 
 
     const IconText = ({ icon, text }) => (
         <Space>
@@ -16,21 +16,14 @@ function SingleNews({data}) {
     return (
         <List.Item
             actions={[
-                <IconText icon={StarOutlined} text={rating} key="list-vertical-star-o" />,
+                <IconText icon={StarOutlined} text={score} key="list-vertical-star-o" />,
             ]}>
             <List.Item.Meta
-                avatar={<Avatar src='https://joeschmoe.io/api/v1/random' />}
+                avatar={<Avatar src='https://m.media-amazon.com/images/I/31tz9upV1FL.png' />}
                 title={title}
-                description={`${new Date(date*1000).toJSON().slice(0,10).replace(/-/g,'/')} by ${nick} `}
+                description={`${new Date(time*1000).toJSON().slice(0,10).replace(/-/g,'/')} by ${by} `}
             />
-            
         </List.Item>
-        // <div className="news-item">
-        //     <p>{title}</p>
-        //     <p>{rating}</p>
-        //     <p>{nick}</p>
-        //     <p>{date}</p>
-        // </div>
     )
 }
 
