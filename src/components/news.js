@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { newsLoad } from "../redux/actions";
 import { Link } from "react-router-dom";
-import { Avatar, List, Button } from "antd";
+import { List, Button, PageHeader } from "antd";
 import { UndoOutlined } from "@ant-design/icons";
 
 function News(props) {
@@ -11,10 +11,19 @@ function News(props) {
     const dispatch = useDispatch(); 
 
     const news = useSelector((state) => state.newsReducer.news);
+    const spinner = useSelector((state) => state.appReducer.loading)
 
     useEffect(() => {
-        dispatch(newsLoad());
+
+        if (!news.length) {
+            dispatch(newsLoad());
+        }
+
         const timer = setInterval(updateNews, 60000);
+
+        return function clearTimer() {
+            clearInterval(timer); 
+        }
     }, [])
 
     const updateNews = () => {
@@ -24,17 +33,20 @@ function News(props) {
 
     return (
         <div className="news">
+            <PageHeader
+                className="site-page-header"
+                title="Hacker News"
+                extra={[
+                    <Button key="header-button1" type="primary" shape="round" icon={<UndoOutlined />} onClick={updateNews}>update news</Button>
+                ]}
+            ></PageHeader>
+            
             <List
                 itemLayout="vertical"
                 size="large"
-                header={
-                    <div>
-                        <p>News </p>
-                        <Button type="primary" shape="round" icon={<UndoOutlined />} onClick={updateNews}>update news</Button>
-                    </div>
-                }
+                header="Last 100 news"
                 pagination={{}}
-                loading = {!news.length}
+                loading={spinner}
                 dataSource={news}
                 renderItem={(item) => (
                     <Link key={item.id} to={`/stories/${item.id}`} >
@@ -42,7 +54,6 @@ function News(props) {
                     </Link>
                 )}
             />
-            
         </div>
     )
 }

@@ -1,4 +1,6 @@
-import { STORY_LOAD, UPDATE_NUMBERS_OF_COMMENTS } from "./types";
+import { 
+    STORY_LOAD, 
+    UPDATE_NUMBERS_OF_COMMENTS } from "./types";
 
 
 const initialState = {
@@ -7,7 +9,6 @@ const initialState = {
 }
 
 export const storyReducer = (state = initialState, action) => {
-    console.log("storyReducer", action);
 
     switch (action.type){
         case STORY_LOAD:

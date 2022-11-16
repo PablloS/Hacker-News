@@ -1,4 +1,4 @@
-import { Comment as AntComment, Tooltip , Avatar} from "antd";
+import { Comment as AntComment, Avatar} from "antd";
 import 'antd/dist/antd.css';
 import { useState } from "react";
 import { CaretDownOutlined} from '@ant-design/icons';
@@ -11,7 +11,7 @@ function Comment({data}) {
 
 
     const handleClick = () => {
-        if (kids != undefined) {
+        if (kids !== undefined) {
 
             const promiseArr = [];
 
@@ -42,9 +42,7 @@ function Comment({data}) {
                     ))}
                     <p>{(kids != undefined && !openChildCommentsFlag) && <CaretDownOutlined />}</p>
                 </AntComment>
-                
             </div>
-            
     )
 }
 

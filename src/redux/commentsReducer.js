@@ -5,7 +5,6 @@ const initialState = {
 }
 
 export const commentsReducer = (state = initialState, action) => {
-    console.log("commentReducer", action);
 
     switch (action.type){
         case COMMENTS_LOAD:
